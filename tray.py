@@ -26,7 +26,7 @@ def setbrightness(brightness_value,cmd="ddcutil -b 16 --brief setvcp 10 "):
 
     return errcode
 
-app = QApplication([])
+app = QApplication(["testname"])
 app.setQuitOnLastWindowClosed(False)
 
 window = QWidget()
