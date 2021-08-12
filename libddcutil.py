@@ -28,7 +28,7 @@ def getbrightness(busno=16):
     return int(out.decode().strip())
 
 def setbrightness(busno=16,brightness_value=50):
-    cmd="ddcutil -b "+str(busno)+" --brief setvcp 10 "+str(brightness_value)
+    cmd="ddcutil --noverify -b "+str(busno)+" --brief setvcp 10 "+str(brightness_value)
     process = subprocess.Popen(cmd, shell=True,
                            stdout=subprocess.PIPE, 
                            stderr=subprocess.PIPE)

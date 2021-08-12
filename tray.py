@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 import subprocess
 import os 
+import sys
 from libddcutil import *
 
 busno = getBusnoFromModel("DELL U3219Q")
@@ -10,11 +11,8 @@ busno = getBusnoFromModel("DELL U3219Q")
 if not busno:
 	exit(1)
 
-
-
-app = QApplication(["testname"])
+app = QApplication(sys.argv)
 app.setQuitOnLastWindowClosed(False)
-
 
 window = QWidget()
 window.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.FramelessWindowHint | Qt.Popup)
