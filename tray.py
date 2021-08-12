@@ -3,28 +3,12 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt
 import subprocess
 import os 
+from libddcutil import *
 
-def getbrightness(cmd="ddcutil -b 16 --brief getvcp 10 | cut -d ' ' -f4"):
-    process = subprocess.Popen(cmd, shell=True,
-                           stdout=subprocess.PIPE, 
-                           stderr=subprocess.PIPE)
+busno = getBusnoFromModel("DELL U3219Q")
 
-    # wait for the process to terminate
-    out, err = process.communicate()
-    errcode = process.returncode
-
-    return int(out.decode().strip())
-
-def setbrightness(brightness_value,cmd="ddcutil -b 16 --brief setvcp 10 "):
-    process = subprocess.Popen(cmd+str(brightness_value), shell=True,
-                           stdout=subprocess.PIPE, 
-                           stderr=subprocess.PIPE)
-
-    # wait for the process to terminate
-    out, err = process.communicate()
-    errcode = process.returncode
-
-    return errcode
+if not busno:
+	exit(1)
 
 app = QApplication(["testname"])
 app.setQuitOnLastWindowClosed(False)
@@ -51,13 +35,13 @@ def updateLabel(value):
         label.setText(str(value))
 
 def updateBrightness():
-        setbrightness(slider.value())
+        setbrightness(busno,slider.value())
 
 def actionTrayActivacted(reason):
 	if reason == QSystemTrayIcon.MiddleClick:
 		QApplication.quit()
 	elif reason == QSystemTrayIcon.Trigger:
-		cur_brightness = getbrightness()
+		cur_brightness = getbrightness(busno)
 		label.setText(str(cur_brightness))
 		slider.setValue(cur_brightness)
 		window.setVisible(not window.isVisible())

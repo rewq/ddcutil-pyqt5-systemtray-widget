@@ -1,0 +1,12 @@
+--noverify Do not read VCP value after setting it
+--nousb                             Do not detect USB devices
+
+
+Invalid display
+   I2C bus:             /dev/i2c-15
+   Monitor:             BOE::
+
+Display 1
+   I2C bus:             /dev/i2c-16
+   Monitor:             DEL:DELL U3219Q:8T7K413
+
