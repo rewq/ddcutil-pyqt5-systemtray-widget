@@ -1,6 +1,8 @@
 --noverify Do not read VCP value after setting it
 --nousb                             Do not detect USB devices
 
+function to check if ddcutil is even on the system
+
 async detect
 async pipe cmds
 
