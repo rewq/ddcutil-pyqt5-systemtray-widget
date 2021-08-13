@@ -1,0 +1,8 @@
+pip install --editable .
+
+in /dev
+python3 -m venv virt
+source virt/bin/activate
+pip3 install --editable ../.
+ddctray
+deactivate

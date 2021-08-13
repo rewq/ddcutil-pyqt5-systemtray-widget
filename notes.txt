@@ -8,3 +8,8 @@ cmds into settings
 
 change tooltip text / name settings
 
+overall errorhandling / alternating icon
+
+settings button / minimize
+
+port to pyside6

@@ -4,12 +4,12 @@ from PyQt5.QtCore import *
 import subprocess
 import os 
 import sys
-from libddcutil import *
+from ddctray.libddcutil import *
 
 busno = getBusnoFromModel("DELL U3219Q")
 
 if not busno:
-	exit(1)
+    exit(1)
 
 app = QApplication(sys.argv)
 app.setQuitOnLastWindowClosed(False)
@@ -29,32 +29,29 @@ layout.addWidget(label)
 window.setLayout(layout)
 
 def centerWindow(w=window):
-	cpos = QCursor().pos()
-	w.move(cpos.x()-int(w.width()/2),cpos.y()-w.height()-8)
+    cpos = QCursor().pos()
+    w.move(cpos.x()-int(w.width()/2),cpos.y()-w.height()-8)
 
 def updateLabel(value):
-        label.setText(str(value))
+        label.setText(str(value)+"%")
 
 def updateBrightness():
         setbrightness(busno,slider.value())
 
 def actionTrayActivacted(reason):
-	if reason == QSystemTrayIcon.MiddleClick:
-		QApplication.quit()
-	elif reason == QSystemTrayIcon.Trigger:
-		window.setVisible(not window.isVisible())
-		centerWindow()
-		cur_brightness = getbrightness(busno)
-		label.setText(str(cur_brightness))
-		slider.setValue(cur_brightness)
+    if reason == QSystemTrayIcon.MiddleClick:
+        QApplication.quit()
+    elif reason == QSystemTrayIcon.Trigger:
+        window.setVisible(not window.isVisible())
+        centerWindow()
+        cur_brightness = getbrightness(busno)
+        label.setText(str(cur_brightness)+"%")
+        slider.setValue(cur_brightness)
 
 def actionTrayActivactede(e):
-	print(e)
+    print(e)
 # Adding an icon
-icon = QIcon(os.path.join( os.getcwd(), 'light-bulb.svg' ))
-
-
-
+icon = QIcon(os.path.join(os.path.dirname(__file__),'inc','light-bulb.png'))
 
 # Adding item on the menu bar
 tray = QSystemTrayIcon()
@@ -72,5 +69,9 @@ tray.setContextMenu(menu)
 tray.activated.connect(actionTrayActivacted)
 slider.valueChanged.connect(updateLabel)
 slider.sliderReleased.connect(updateBrightness)
+ 
+def run():      
+    sys.exit(app.exec_())
 
-app.exec_()
+if __name__ == "__main__":
+    run()
